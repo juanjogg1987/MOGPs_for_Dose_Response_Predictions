@@ -1,7 +1,9 @@
+#################################################
 # This script takes the train and test data and preprocesses them, producing sets of SRMF input matrices which contains:
 # 1. response matrix (either IC50, AUC or Emax)
 # 2. similarity matrix for chemical features
 # 3. similarity matrix for genomic features
+#################################################
 
 library(data.table)
 library(tidyverse)
@@ -12,9 +14,9 @@ library(R.matlab)
 # packageVersion("tidyr")
 # packageVersion("cli")
 
-##################################
+#################################################
 # Define variables
-##################################
+#################################################
 
 metrics <- c("IC50","AUC","Emax")
 
@@ -22,9 +24,9 @@ cellsim_suffix <- "Cellsim_probe.mat"
 drugsim_suffix <- "Drugsim_fig_mt.mat"
 resp_suffix <- "resp.mat"
 
-##################################
+#################################################
 # Start code
-##################################
+#################################################
 
 setwd("/Users/melodyparker/Documents/DRP/SRMF/GDSC2_Datasets_From5Cancers_Train1Cancer_Increasing_TrainingData")
 
@@ -85,9 +87,9 @@ for(metric in metrics){
     train_dataset <- fread(in_train_file)
     print(paste0("Reading in ", in_train_file))
     
-    ##################################
+    #################################################
     # 1. Create response matrix for merged train and test data
-    ##################################
+    #################################################
     
     # Define out file path for the merged response matrices
     out_merged_train_mat <- file.path(out_sub_dir,paste(cancer_type,m,seed,metric,resp_suffix,sep="_"))
@@ -134,9 +136,9 @@ for(metric in metrics){
     # Write to matlab mat file
     writeMat(out_merged_train_mat,resp=merged_mat)
     
-    ###########################################
+    #################################################
     # 2. Create the merged drug similarity matrix
-    ###########################################
+    #################################################
     
     # Define drugs output file
     out_drugsim_file <- file.path(out_sub_dir,paste(cancer_type,m,seed,metric,drugsim_suffix,sep="_"))
