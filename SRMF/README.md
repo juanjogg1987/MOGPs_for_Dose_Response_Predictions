@@ -1,3 +1,5 @@
+## Benchmarking against SRMF
+
 1. Preprocessing datasets: Data was extracted from each metric (IC50, AUC and Emax). A response matrix was created for each train dataset by concatenating it with its corresponding test matrix after setting the test values to NaN - this is so that the model would not “train” on the test data, but so that the test drugs and cell lines would still be included in the prediction. Pearson’s Correlation was used to generate similarity matrices for chemical and genomic features. The trios of drug response, genomic similarity, and chemical similarity matrices were all used as input to the SRMF model. 
-2. Running SRMF: SRMF was run on our data for each trio, for each metric. SRMF.rar was downloaded from the  https://github.com/linwang1982/SRMF and predict.m was edited to loop through all of our inputs.
+2. Running SRMF: SRMF was run on our data for each trio, for each metric. SRMF.rar was downloaded from  https://github.com/linwang1982/SRMF and predict.m was edited to loop through all of our inputs.
 3. Postprocessing data: Output was generated. The prediction for the test data was extracted from each raw SRMF response matrix. This was formatted and results were written to csv files.
