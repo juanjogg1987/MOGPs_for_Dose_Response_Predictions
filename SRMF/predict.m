@@ -4,10 +4,10 @@
 clear;clc;
 
 % Set the directory where the seedi folders are located
-dir_path = 'C:/Users/MelodyP/Documents/DRP/SRMF_datasets/';
+dir_path = '/Users/melodyparker/Documents/DRP/SRMF/SRMF_datasets';
 
 % Extract all data set directories to loop through
-datasets = strsplit(genpath(dir_path), ';');
+datasets = strsplit(genpath(dir_path), pathsep());
 datasets = datasets(contains(datasets, 'seed'));
 
 % Loop through data sets
