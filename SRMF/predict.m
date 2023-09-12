@@ -4,10 +4,10 @@
 clear;clc;
 
 % Set the directory where the seedi folders are located
-dir_path = '/Users/melodyparker/Documents/DRP/SRMF/SRMF_datasets';
+dir_path = 'C:/Users/MelodyP/Documents/DRP/SRMF_datasets/';
 
 % Extract all data set directories to loop through
-datasets = strsplit(genpath(dir_path), pathsep());
+datasets = strsplit(genpath(dir_path), ';');
 datasets = datasets(contains(datasets, 'seed'));
 
 % Loop through data sets
@@ -66,10 +66,11 @@ for i = 1:numel(datasets)
     % save(fullfile(curr_dir, 'drugwise_predict1.mat'));
     save(fullfile(curr_dir, [out_prefix, 'drugwise_predict1.mat']));
     % load(fullfile(curr_dir, [out_prefix, 'drugwise_predict1.mat']))
-   
-    % Write prediction matrix to csv
-    finalpred = transpose(numpred);
-    writematrix(finalpred, fullfile(curr_dir, [out_prefix, 'pred.csv']));
+
+    % Write response matrix to csv
+    F = U*transpose(V);
+    G = transpose(F);
+    writematrix(G, fullfile(curr_dir, [out_prefix, 'G.csv']));
 
     % Remove path
     rmpath(curr_dir);
