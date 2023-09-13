@@ -15,12 +15,15 @@ _FOLDER = "../Dataset_BRAF_NoReplica_ANOVA_Features/GDSC1/"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import getopt
 import sys
+sys.path.append('..')
 
 warnings.filterwarnings("ignore")
 #os.environ['PATH'] = os.environ['PATH'] + ':/usr/texbin'
 "Best Model Drug1061: ExactMOGP_and_KLRelevance_MelanomaGDSC1_ANOVAFeatures.py -i 30 -s 1.0000 -k 2 -w 1.0000 -r 1014 -p 505 -d 1061 -e 0"
 "Best Model Drug1373: ExactMOGP_and_KLRelevance_MelanomaGDSC1_ANOVAFeatures.py -i 30 -s 1.0000 -k 2 -w 1.0000 -r 1013 -p 221 -d 1373 -e 0"
 "Best Model Drug1036: ExactMOGP_and_KLRelevance_MelanomaGDSC1_ANOVAFeatures.py -i 30 -s 3.0000 -k 2 -w 0.0100 -r 1018 -p 946 -d 1036 -e 0"
+
+"%%"
 
 print("TODO: check that Niter is actually used!!!!")
 class commandLine:
@@ -64,6 +67,8 @@ config = commandLine()
 "#but the drugs 1371 and 1373 have 5 concentrations, i.e, d1, d3, d5, d7 and d9"
 "#Drugs 1036 and 1371 are the same one, but the former has 9 concentrations and the latter 5 concentrations"
 
+"%%"
+
 dconcentr = {"1061": "9conc","1036": "9conc","1373": "5conc","1371": "5conc"}
 feat_for_drug = {"1061": "2-fold","1036": "2-fold","1373": "4-fold","1371": "4-fold"}
 name_for_KLrelevance = 'GDSC1_melanoma_BRAF_'+dconcentr[config.drug_name]+'_noreps_v3.csv'
@@ -89,7 +94,7 @@ elif config.drug_name == "1373" or config.drug_name == "1371":
     start_pos_features = 21
 
 print(df_train_No_MolecForm.columns[start_pos_features])
-
+"%%"
 #print("Columns with std equal zero:")
 #print("Number of columns with zero std:", np.sum(df_train_No_MolecForm.std(0) == 0.0))
 #print(np.where(df_train_No_MolecForm.std(0) == 0.0))
@@ -109,6 +114,8 @@ for i in range(2, Dnorm_cell+1):
         (y_train_drug, np.clip(df_train_No_MolecForm["norm_cells_" + str(i)].values[:, None], 1.0e-9, np.inf)), 1)
 
 print("Ytrain size: ", y_train_drug.shape)
+
+"%%"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Since we fitted the dose response curves with a Sigmoid4_parameters function"
 "We extract the optimal coefficients in order to reproduce such a Sigmoid4_parameters fitting"
@@ -341,6 +348,7 @@ for Nfold in range(0,nsplits+1):
 
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 N_Samples = 50
 Ypred_interp,StdPred_upper_interp,StdPred_lower_interp,Ypred_MOGP_Samples,_,_,_,_ = MyUtils.Predict_Curve_and_SummaryMetrics(x_dose=x_dose,x_dose_new = x_dose_new,model=model,Xval=Xtrain,MOGPsamples=N_Samples)
 
