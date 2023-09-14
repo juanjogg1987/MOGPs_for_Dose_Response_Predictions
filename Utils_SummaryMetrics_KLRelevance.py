@@ -18,6 +18,47 @@ def sigmoid_4_param(x, x0, L, k, d):
     """
     return ( 1/ (L + np.exp(-k*(x-x0))) + d)
 
+def ArrangeData_to_CrossVal(Ntasks, Nfold, nsplits, list_folds, Xall, Yall, Emax_all, IC50_all, AUC_all):
+    if Nfold < nsplits:
+        train_ind, test_ind = list_folds[Nfold]
+        print(f"{test_ind} to Val in IC50")
+
+        Xval_aux = Xall[test_ind].copy()
+        Ylabel_val = np.array([i * np.ones(Xval_aux.shape[0]) for i in range(Ntasks)]).flatten()[:, None]
+
+        Xval = np.concatenate((np.tile(Xval_aux, (Ntasks, 1)), Ylabel_val), 1)
+
+        Xtrain_aux = Xall[train_ind].copy()
+        Ylabel_train = np.array([i * np.ones(Xtrain_aux.shape[0]) for i in range(Ntasks)]).flatten()[:, None]
+        Xtrain = np.concatenate((np.tile(Xtrain_aux, (Ntasks, 1)), Ylabel_train), 1)
+
+        Yval = Yall[test_ind].T.flatten().copy()[:, None]
+        Ytrain = Yall[train_ind].T.flatten().copy()[:, None]
+
+        Emax_val = Emax_all[test_ind].copy()
+        AUC_val = AUC_all[test_ind].copy()
+        IC50_val = IC50_all[test_ind].copy()
+    else:
+        print(f"Train ovell all Data")
+        _, test_ind = list_folds[
+            0]  # Just assigning by defaul fold0 as the test (of course not to report it as a result)
+        Xval_aux = Xall[test_ind].copy()
+        Ylabel_val = np.array([i * np.ones(Xval_aux.shape[0]) for i in range(Ntasks)]).flatten()[:, None]
+
+        Xval = np.concatenate((np.tile(Xval_aux, (Ntasks, 1)), Ylabel_val), 1)
+
+        Xtrain_aux = Xall.copy()
+        Ylabel_train = np.array([i * np.ones(Xtrain_aux.shape[0]) for i in range(Ntasks)]).flatten()[:, None]
+        Xtrain = np.concatenate((np.tile(Xtrain_aux, (Ntasks, 1)), Ylabel_train), 1)
+
+        Yval = Yall[test_ind].T.flatten().copy()[:, None]
+        Ytrain = Yall.T.flatten().copy()[:, None]
+
+        Emax_val = Emax_all[test_ind].copy()
+        AUC_val = AUC_all[test_ind].copy()
+        IC50_val = IC50_all[test_ind].copy()
+    return Xtrain, Ytrain, Xval, Xval_aux, Yval, Emax_val, IC50_val, AUC_val
+
 def Get_IC50_AUC_Emax(params_4_sig_train,x_lin,x_real_dose):
     x_lin_tile = np.tile(x_lin, (params_4_sig_train.shape[0], 1))
     # (x_lin,params_4_sig_train.shape[0],1).shape

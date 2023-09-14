@@ -15,6 +15,7 @@ _FOLDER = "../Dataset_BRAF_NoReplica_ANOVA_Features/GDSC2/"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import getopt
 import sys
+sys.path.append('..')
 
 warnings.filterwarnings("ignore")
 #os.environ['PATH'] = os.environ['PATH'] + ':/usr/texbin'

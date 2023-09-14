@@ -506,13 +506,3 @@ IC50_MSE_Dose7 = np.mean((IC50_Dose7 - IC50_pred_Dose7) ** 2)
 print("IC50 MSE:", IC50_MSE_Dose7)
 print("AUC MAE:", AUC_abs_Dose7)
 print("Emax MAE:", Emax_abs_Dose7)
-
-from scipy.stats import spearmanr
-
-pos_Actual_IC50 = IC50_Dose7 != 1.5
-spear_corr_all, p_value_all = spearmanr(IC50_Dose7, IC50_pred_Dose7)
-spear_corr_actualIC50, p_value_actual = spearmanr(IC50_Dose7[pos_Actual_IC50],IC50_pred_Dose7[pos_Actual_IC50])
-print("Spearman_all Corr: ", spear_corr_all)
-print("Spearman p-value: ", p_value_all)
-print("Spearman_actualIC50 Corr: ", spear_corr_actualIC50)
-print("Spearman p-value: ", p_value_actual)
